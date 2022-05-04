@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const FILTER_API_BASE_URL = 'http://localhost:8080/api/filters'
+const FILTER_API_BASE_URL = 'http://localhost:8081/api/filters'
 
 class FilterService{
     getFilters(){

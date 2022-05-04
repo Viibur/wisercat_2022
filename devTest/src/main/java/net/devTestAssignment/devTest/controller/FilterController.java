@@ -24,6 +24,7 @@ public class FilterController {
     public List<Filter> postFilter(@RequestBody Filter filter){
         filterRepository.save(filter);
         return fetchFilters();
+
     }
 
 }
