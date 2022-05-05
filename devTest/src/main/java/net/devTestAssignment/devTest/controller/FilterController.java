@@ -1,5 +1,6 @@
 package net.devTestAssignment.devTest.controller;
 
+import net.devTestAssignment.devTest.entity.Criteria;
 import net.devTestAssignment.devTest.entity.Filter;
 import net.devTestAssignment.devTest.repository.FilterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +23,12 @@ public class FilterController {
 
     @PostMapping("/filters")
     public List<Filter> postFilter(@RequestBody Filter filter){
+        List<Criteria> criteriaList = filter.getCriteria();
+        for (Criteria criteria:criteriaList) {
+            criteria.setFilter(filter);
+        }
         filterRepository.save(filter);
         return fetchFilters();
-
     }
 
 }
