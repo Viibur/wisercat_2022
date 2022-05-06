@@ -24,7 +24,7 @@ public class DevTestApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 
 		Filter filter1 = new Filter("Andre");
-		Criteria criteria1 = Criteria.builder().filter(filter1).type("Amount").option("More").defaultValue("4").build();
+		Criteria criteria1 = Criteria.builder().filter(filter1).type("Amount").option("More than").defaultValue("4").build();
 		Criteria criteria2 = Criteria.builder().filter(filter1).type("Title").option("Starts with").defaultValue("Hello").build();
 		Criteria criteria3 = Criteria.builder().filter(filter1).type("Date").option("none").defaultValue("today").build();
 		List<Criteria> criteria = Arrays.asList(criteria1,criteria2,criteria3);
