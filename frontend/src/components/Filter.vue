@@ -39,6 +39,7 @@
                         <option selected text="Date" value="Date"/>
                      </select>
                 </div>
+                <el-button type="danger" @click="deleteCriteria(criteriaItem)">X</el-button>
             </el-form-item>
             <el-form-item>
                 <el-button @click="newCriteria()">Add row</el-button>
@@ -87,7 +88,9 @@ export default{
         },
         // Sends POST request to DB to save filter
         addFilter(){
-            FilterService.addFilter(this.filterElem).then((response) => this.filters = response.data)
+            if(this.filterElem.criteria.length > 0 && this.filterElem.name.length > 0){
+                FilterService.addFilter(this.filterElem).then((response) => this.filters = response.data)
+            }
             this.hideForm()
         },
         // Render all existing filter criteria for that filter on page
@@ -108,7 +111,7 @@ export default{
                     parent.appendChild(inputNumber);
 
                     // Make option selector for all three predefined values
-                    const values = ["More than","Less than","Equal"];
+                    const values = ["More than","Less than","Equals"];
                     const comparingConditions = document.createElement("select");
                     for (const val of values){
                         const option = document.createElement("option");
@@ -194,6 +197,10 @@ export default{
         changeItemDefault(event, criteriaItem){
             criteriaItem.defaultValue = event.target.value
         },
+        deleteCriteria(criteriaItem){
+            const index = this.filterElem.criteria.indexOf(criteriaItem)
+            this.filterElem.criteria.splice(index,1)
+        }
     },
     // On page render, show all existing filters
     created() {
@@ -208,5 +215,14 @@ table {
 }
 #formInput{
     display: none;
+}
+input{
+    height: 30px;
+    width: 100px;
+    padding: auto;
+}
+select{
+    height: 30px;
+    width: 100px;
 }
 </style>
