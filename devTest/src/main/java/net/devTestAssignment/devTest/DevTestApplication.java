@@ -23,19 +23,20 @@ public class DevTestApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		Filter filter1 = new Filter("Andre");
+		Filter filter1 = new Filter("Filter1");
 		Criteria criteria1 = Criteria.builder().filter(filter1).type("Amount").option("More than").defaultValue("4").build();
 		Criteria criteria2 = Criteria.builder().filter(filter1).type("Title").option("Starts with").defaultValue("Hello").build();
 		Criteria criteria3 = Criteria.builder().filter(filter1).type("Date").option("none").defaultValue("today").build();
-		List<Criteria> criteria = Arrays.asList(criteria1,criteria2,criteria3);
-		filter1.setCriteria(criteria);
+		List<Criteria> criteriaList1 = Arrays.asList(criteria1,criteria2,criteria3);
+		filter1.setCriteria(criteriaList1);
 
-		Filter filter2 = Filter.builder().name("Taavi").build();
-		Filter filter3 = Filter.builder().name("Raiko").build();
-
+		Filter filter2 = new Filter("Filter2");
+		Criteria criteria4 = Criteria.builder().filter(filter2).type("Amount").option("More than").defaultValue("41").build();
+		Criteria criteria5 = Criteria.builder().filter(filter2).type("Title").option("Ends with").defaultValue("l.").build();
+		List<Criteria> criteriaList2 = Arrays.asList(criteria4,criteria5);
+		filter2.setCriteria(criteriaList2);
 
 		filterRepository.save(filter1);
 		filterRepository.save(filter2);
-		filterRepository.save(filter3);
 	}
 }

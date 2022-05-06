@@ -51,17 +51,12 @@
         </el-form>
     </div>
     <div class="container">
-        <el-button v-on:click="showForm()">Add Filter</el-button>
-        <table>
-            <tbody>
-                <tr v-for = "filter in filters" v-bind:key="filter.id" v-on:click="this.clicked(filter)">
-                    <td> {{filter.name}}</td>
-                </tr>
-            </tbody>
-        </table>
+        <el-button type="primary" v-on:click="showForm()">Add Filter</el-button>
+        <div v-for = "filter in filters" v-bind:key="filter.id" v-on:click="this.clicked(filter)">
+            {{filter.name}}
+        </div>
         <div>
             <el-form id="renderedFilter">
-                
             </el-form>
         </div>
     </div>
@@ -92,12 +87,13 @@ export default{
                 FilterService.addFilter(this.filterElem).then((response) => this.filters = response.data)
             }
             this.hideForm()
+            console.log(this.filterElem.criteria)
         },
         // Render all existing filter criteria for that filter on page
         clicked(filter){
+            console.log(this.filters)
             const parent = document.getElementById("renderedFilter");
             parent.textContent = '';
-
             // All of the criteria that belong to that filter
             const parsable = filter.criteria
             for (let index = 0; index < parsable.length; index++) {
@@ -188,6 +184,11 @@ export default{
         // If user changes criteria type(Number -> Title), changes it for that criteria item as well
         changeItemType(event, criteriaItem){
             criteriaItem.type = event.target.value
+            if(criteriaItem.type == "Amount"){
+                criteriaItem.option = "More than"
+            }else if (criteriaItem.type == "Title"){
+                criteriaItem.option = "Starts with"
+            }else criteriaItem.option = ""
         },
         // If user changes criteria default option(More Than -> Equals), changes it for that criteria item as well
         changeItemOption(event, criteriaItem){
@@ -197,6 +198,7 @@ export default{
         changeItemDefault(event, criteriaItem){
             criteriaItem.defaultValue = event.target.value
         },
+        // Method for removing user selected criteria from filter creation
         deleteCriteria(criteriaItem){
             const index = this.filterElem.criteria.indexOf(criteriaItem)
             this.filterElem.criteria.splice(index,1)
@@ -215,6 +217,14 @@ table {
 }
 #formInput{
     display: none;
+    text-align: left;
+    margin-left: 2vw;
+}
+.container{
+    text-align: left;
+    margin-left: 2vw;
+    padding-left: 0;
+    padding-right: 0;
 }
 input{
     height: 30px;

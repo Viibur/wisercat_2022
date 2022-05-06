@@ -1,14 +1,14 @@
 <template>
-  <Filters />
+  <Filter />
 </template>
 
 <script>
-import Filters from './components/Filter.vue';
+import Filter from './components/Filter.vue';
 
 export default {
   name: 'App',
   components: {
-    Filters,
+    Filter,
   }
 }
 </script>
